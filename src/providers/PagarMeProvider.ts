@@ -131,8 +131,23 @@ class PagarMeProvider{
             ...paymentParams
         }
 
-        PagarmeAPI(transactionParams)
-       
+        const response = await PagarmeAPI(transactionParams)
+       console.log(response.charges[0]['last_transaction'].url)
+    }
+
+    translateStatus(status){
+        const statusMap = {
+            processing: "processing",
+            waiting_payment: "pending",
+            authorized: "pending",
+            paid: "approved",
+            refused: "refused",
+            pending_refund: "refunded",
+            refunded: "refunded",
+            chargedback: "chargeback"
+        }
+
+        return statusMap[status];
     }
 }
 
