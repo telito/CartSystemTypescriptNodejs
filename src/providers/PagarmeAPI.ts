@@ -1,6 +1,6 @@
 
 const PagarmeAPI = (transactionParams) => {
-    console.log(transactionParams)
+
 fetch('https://api.pagar.me/core/v5/orders', {
     method: 'POST', // or 'PUT'
     headers: {
@@ -9,11 +9,9 @@ fetch('https://api.pagar.me/core/v5/orders', {
     },
     
     body: JSON.stringify(transactionParams),
-  }).then((res) => {
-    console.log('resposta aqui:  ',res, res.status)
-  }).catch((err) => {
-    console.log(err)
-  })
+  }).then(res => res.json())
+  .then(json => console.log(json))
+  .catch(err => console.error('error:' + err));
 }
 
 export default PagarmeAPI;
