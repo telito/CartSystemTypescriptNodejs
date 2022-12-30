@@ -5,7 +5,7 @@ class CartsController{
             const carts = await Cart.find();
             return res.status(200).json(carts)
         } catch(err){
-            console.error(err)
+            
             return res.status(500).json({error: "Internal server error"})
         }
         
@@ -17,7 +17,7 @@ class CartsController{
             const cart = await Cart.create({code, price});
             return res.status(201).json(cart)
         }catch(err){
-            console.error(err)
+            
             return res.status(500).json({error: "Internal server error"})
         }
     }

@@ -15,6 +15,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^18.11.15",
     "@types/nodemon": "^1.19.2",
+    "@types/uuid": "^9.0.0",
     "@types/yup": "^0.32.0",
     "nodemon": "^2.0.20",
     "sucrase": "^3.29.0",
@@ -25,10 +26,13 @@
   "dependencies": {
     "cors": "^2.8.5",
     "cpf-cnpj-validator": "^1.0.3",
+    "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "libphonenumber-js": "^1.10.15",
     "mongoose": "^6.8.0",
+    "pagarme": "^4.29.0",
+    "uuid": "^9.0.0",
     "yup": "^0.32.11"
   }
 }

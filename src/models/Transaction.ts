@@ -11,10 +11,6 @@ const schema = new mongoose.Schema(
             required: true,
             unique: true
         },
-        price: {
-            type: Number,
-            required: true
-        },
         status: {
             type: String,
             enum: [
@@ -28,11 +24,11 @@ const schema = new mongoose.Schema(
             ],
             required: true
         },
-        paymenType: {
+        paymentType: {
             type: String,
             enum:[
                 "billet",
-                "credit_cart"
+                "credit_card"
             ],
             required: true
         },
@@ -69,7 +65,7 @@ const schema = new mongoose.Schema(
         billingNeighborhood:{
             type:String
         },
-        billingcity:{
+        billingCity:{
             type:String
         },
         billingState:{
