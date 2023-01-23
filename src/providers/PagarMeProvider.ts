@@ -126,13 +126,26 @@ class PagarMeProvider{
         }
 
         const transactionParams = {
+            postback_url: process.env.PAGARME_WEBHOOK_URL,
             ...customerParams,
             ...itemsParams,
             ...paymentParams
         }
 
         const response = await PagarmeAPI(transactionParams)
-       console.log(response.charges[0]['last_transaction'].url)
+        
+       return {
+        transactionId: response.id,
+        status: this.translateStatus(response.status),
+        billet: {
+            url: response.charges[0].last_transaction.url,
+            barCode: response.charges[0].last_transaction.barcode
+        },
+        cart: {
+            id: response.charges[0].last_transaction.card?.id
+        },
+        processorResponse: JSON.stringify(response)
+       }
     }
 
     translateStatus(status){

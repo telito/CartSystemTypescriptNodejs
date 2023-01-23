@@ -28,6 +28,7 @@ class TransactionService {
         }
 
         const transaction = await Transaction.create({
+            transactionId:  '-',
             cartCode: cart.code,
             code: await uuidV4(),
             price: cart.price,
@@ -45,10 +46,10 @@ class TransactionService {
             billingCity: billing.city,
             billingState: billing.state,
             billingZipCode: billing.zipCode,
+            processorResponse: '-',
         });
 
-        this.paymentProvider.process(
-            {
+        const response = await this.paymentProvider.process({
             transactionCode: transaction.code,
             total: transaction.total,
             paymentType,
@@ -56,11 +57,34 @@ class TransactionService {
             creditCard,
             customer,
             billing,
-        }
-            );
+        });
+        
+        await transaction.updateOne({
+                transactionId: response.transactionId,
+                status: response.status,
+                processorResponse: response.processorResponse,
+        });
 
-        return transaction;
+
+
+        return response;
     }   
+
+    async updateStatus({code, providerStatus}){
+        const transaction = Transaction.findOne({code});
+
+        if(!transaction){
+            throw `Transaction ${code} not found.`
+        }
+
+        const status = this.paymentProvider.translateStatus(providerStatus)
+
+        if(!status){
+            throw `Status is empty`;
+        }
+
+        await transaction.updateOne({ status });
+    }
 }
 
 export default TransactionService;
